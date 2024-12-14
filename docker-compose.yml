@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_student_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234 # Root password
+      MYSQL_DATABASE: student_db    # Auto-create this database
+      MYSQL_USER: user    # Create a new user
+      MYSQL_PASSWORD: 1234      # Password for the new user
+    ports:
+      - "3306:3306" # Expose MySQL on localhost
+    volumes:
+      - db_data:/var/lib/mysql       # Persistent data storage
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro # Seed scripts
+
+volumes:
+  db_data:
